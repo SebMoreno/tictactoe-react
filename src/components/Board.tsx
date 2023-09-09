@@ -1,12 +1,12 @@
 import { Square } from "./Square.tsx";
 import { FC } from "react";
-import { Player } from "../types";
+import { BoardCells } from "../types";
 import { calculateWinner } from "../services/calculateWinner.ts";
 
 interface BoardProps {
     xIsNext: boolean;
-    squares: Array<Player>;
-    onPlay: (nextSquares: Array<Player>) => void;
+    squares: BoardCells;
+    onPlay: (nextSquares: BoardCells) => void;
 }
 
 export const Board: FC<BoardProps> = ({xIsNext, squares, onPlay}) => {

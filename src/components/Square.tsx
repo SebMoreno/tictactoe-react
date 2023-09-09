@@ -1,8 +1,8 @@
 import React from "react";
-import { Player } from "../types";
+import { BoardCells } from "../types";
 
 interface SquareProps {
-    value?: Player;
+    value?: BoardCells[number];
     onSquareClick: () => void;
 }
 
