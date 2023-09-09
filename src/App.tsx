@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Board } from "./components/Board.tsx";
 import { BoardCells } from "./types";
 import { calculateWinner } from "./services/calculateWinner.ts";
+import { History } from "./components/History.tsx";
 
 export const App = () => {
     const [boardCells, setBoardCells] = useState<BoardCells>(Array(9).fill(null));
@@ -14,7 +15,7 @@ export const App = () => {
         setHistory([...history, nextSquares]);
     }
 
-    function jumpToMove(move: number) {
+    function handleJumpToMove(move: number) {
         setBoardCells(history[move]);
         setXIsNext(move % 2 === 0);
         setHistory(history.slice(0, move + 1));
@@ -31,15 +32,7 @@ export const App = () => {
             </div>
             <div>
                 <h1>Game History</h1>
-                <ol className="history" start={0}>
-                    {history.map((_, move) => (
-                        <li key={move}>
-                            <button className="history_button" onClick={() => jumpToMove(move)}>
-                                <span>{`Go to ${move > 0 ? `move #${move}` : 'game start'}`}</span>
-                            </button>
-                        </li>
-                    ))}
-                </ol>
+                <History history={history} onJumpToMove={handleJumpToMove}/>
             </div>
         </div>
     );
