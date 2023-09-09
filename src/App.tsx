@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import { Board } from "./components/Board.tsx";
+import { BoardCells } from "./types";
 
-function App() {
-  const [count, setCount] = useState(0)
+export const App = () => {
+    const [history, setHistory] = useState<Array<BoardCells>>([Array(9).fill(null)]);
+    const [currentMove, setCurrentMove] = useState(0);
+    const xIsNext = currentMove % 2 === 0;
+    const currentSquares = history[currentMove];
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    function handlePlay(nextSquares: BoardCells) {
+        const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+        setHistory(nextHistory);
+        setCurrentMove(nextHistory.length - 1);
+    }
 
-export default App
+    function jumpToMove(move: number) {
+        setHistory(history.slice(0, move + 1));
+        setCurrentMove(move);
+    }
+
+    return (
+        <div className="game">
+            <div className="game-board">
+                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+            </div>
+            <div className="game-info">
+                <h1>Game History</h1>
+                <ol>
+                    {history.map((_, move) => (
+                        <li key={move}>
+                            <button onClick={() => jumpToMove(move)}>
+                                {`Go to ${move > 0 ? `move #${move}` : 'game start'}`}
+                            </button>
+                        </li>
+                    ))}
+                </ol>
+            </div>
+        </div>
+    );
+};
