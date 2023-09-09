@@ -3,6 +3,7 @@ import { Board } from "./components/Board.tsx";
 import { BoardCells } from "./types";
 import { calculateWinner } from "./services/calculateWinner.ts";
 import { History } from "./components/History.tsx";
+import { Button } from "./elements/Button.tsx";
 
 export const App = () => {
     const [boardCells, setBoardCells] = useState<BoardCells>(Array(9).fill(null));
@@ -21,6 +22,13 @@ export const App = () => {
         setHistory(history.slice(0, move + 1));
     }
 
+    function resetGame() {
+        const newBoardCells = Array(9).fill(null);
+        setBoardCells(newBoardCells);
+        setHistory([newBoardCells]);
+        setXIsNext(true);
+    }
+
     const winner = calculateWinner(boardCells);
     return (
         <div className="game">
@@ -28,6 +36,9 @@ export const App = () => {
                 <h2 className={`status ${winner ? "winner" : ""}`}>
                     {winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? 'X' : 'O'}`}
                 </h2>
+                {winner &&
+                    <Button type="lifted" onClick={resetGame} style={{margin: "1rem 0"}}>Reset Game</Button>
+                }
                 <Board xIsNext={xIsNext} squares={boardCells} onPlay={handlePlay}/>
             </div>
             <div>

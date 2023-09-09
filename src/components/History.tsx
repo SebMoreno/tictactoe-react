@@ -1,5 +1,6 @@
 import { BoardCells } from "../types";
 import React from "react";
+import { Button } from "../elements/Button.tsx";
 
 interface HistoryProps {
     history: Array<BoardCells>;
@@ -11,9 +12,9 @@ export const History: React.FC<HistoryProps> = ({history, onJumpToMove}) => {
         <ol className="history" start={0}>
             {history.map((_, move) => (
                 <li key={move}>
-                    <button className="history_button" onClick={() => onJumpToMove(move)}>
-                        <span>{`Go to ${move > 0 ? `move #${move}` : 'game start'}`}</span>
-                    </button>
+                    <Button type="galaxy" onClick={() => onJumpToMove(move)}>
+                        {`Go to ${move > 0 ? `move #${move}` : 'game start'}`}
+                    </Button>
                 </li>
             ))}
         </ol>
