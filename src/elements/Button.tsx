@@ -8,8 +8,13 @@ interface ButtonProps {
     buttonNativeProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-export const Button: React.FC<ButtonProps> = ({children, type, onClick, buttonNativeProps}) => (
-    <button className={type} onClick={onClick} {...buttonNativeProps}>
-        <span>{children}</span>
-    </button>
-);
+export class Button extends React.Component<ButtonProps> {
+    render() {
+        const {children, type, onClick, buttonNativeProps} = this.props;
+        return (
+            <button className={type} onClick={onClick} {...buttonNativeProps}>
+                <span>{children}</span>
+            </button>
+        );
+    }
+}
