@@ -1,37 +1,41 @@
 import { useState } from 'react';
-import './App.css';
 import { Board } from "./components/Board.tsx";
 import { BoardCells } from "./types";
+import { calculateWinner } from "./services/calculateWinner.ts";
 
 export const App = () => {
-    const [history, setHistory] = useState<Array<BoardCells>>([Array(9).fill(null)]);
-    const [currentMove, setCurrentMove] = useState(0);
-    const xIsNext = currentMove % 2 === 0;
-    const currentSquares = history[currentMove];
+    const [boardCells, setBoardCells] = useState<BoardCells>(Array(9).fill(null));
+    const [history, setHistory] = useState<Array<BoardCells>>([boardCells]);
+    const [xIsNext, setXIsNext] = useState(true);
 
     function handlePlay(nextSquares: BoardCells) {
-        const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-        setHistory(nextHistory);
-        setCurrentMove(nextHistory.length - 1);
+        setBoardCells(nextSquares);
+        setXIsNext(prevPlayer => !prevPlayer);
+        setHistory([...history, nextSquares]);
     }
 
     function jumpToMove(move: number) {
+        setBoardCells(history[move]);
+        setXIsNext(move % 2 === 0);
         setHistory(history.slice(0, move + 1));
-        setCurrentMove(move);
     }
 
+    const winner = calculateWinner(boardCells);
     return (
         <div className="game">
-            <div className="game-board">
-                <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+            <div>
+                <h2 className={`status ${winner ? "winner" : ""}`}>
+                    {winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? 'X' : 'O'}`}
+                </h2>
+                <Board xIsNext={xIsNext} squares={boardCells} onPlay={handlePlay}/>
             </div>
-            <div className="game-info">
+            <div>
                 <h1>Game History</h1>
-                <ol>
+                <ol className="history" start={0}>
                     {history.map((_, move) => (
                         <li key={move}>
-                            <button onClick={() => jumpToMove(move)}>
-                                {`Go to ${move > 0 ? `move #${move}` : 'game start'}`}
+                            <button className="history_button" onClick={() => jumpToMove(move)}>
+                                <span>{`Go to ${move > 0 ? `move #${move}` : 'game start'}`}</span>
                             </button>
                         </li>
                     ))}
