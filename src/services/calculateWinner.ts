@@ -1,6 +1,6 @@
 import { Player } from "../types";
 
-export function calculateWinner(squares: Player[]) {
+export function calculateWinner(squares: Array<Player>) {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
