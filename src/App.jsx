@@ -1,22 +1,21 @@
 import { useState } from 'react';
-import { Board } from "./components/Board.tsx";
-import { BoardCells } from "./types";
-import { calculateWinner } from "./services/calculateWinner.ts";
-import { History } from "./components/History.tsx";
-import { Button } from "./elements/Button.tsx";
+import { calculateWinner } from "./services/calculateWinner.js";
+import { History } from "./components/History.jsx";
+import { Button } from "./elements/Button.jsx";
+import { Board } from "./components/Board.jsx";
 
 export const App = () => {
-    const [boardCells, setBoardCells] = useState<BoardCells>(Array(9).fill(null));
-    const [history, setHistory] = useState<Array<BoardCells>>([boardCells]);
+    const [boardCells, setBoardCells] = useState(Array(9).fill(null));
+    const [history, setHistory] = useState([boardCells]);
     const [xIsNext, setXIsNext] = useState(true);
 
-    function handlePlay(nextSquares: BoardCells) {
+    function handlePlay(nextSquares) {
         setBoardCells(nextSquares);
         setXIsNext(prevPlayer => !prevPlayer);
         setHistory([...history, nextSquares]);
     }
 
-    function handleJumpToMove(move: number) {
+    function handleJumpToMove(move) {
         setBoardCells(history[move]);
         setXIsNext(move % 2 === 0);
         setHistory(history.slice(0, move + 1));
