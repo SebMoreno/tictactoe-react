@@ -1,18 +1,12 @@
 import { Component } from "react";
-import { Board } from "./components/Board.tsx";
-import { BoardCells } from "./types";
-import { calculateWinner } from "./services/calculateWinner.ts";
-import { History } from "./components/History.tsx";
-import { Button } from "./elements/Button.tsx";
+import { Board } from "./components/Board.jsx";
+import { calculateWinner } from "./services/calculateWinner.js";
+import { History } from "./components/History.jsx";
+import { Button } from "./elements/Button.jsx";
 
-interface AppState {
-    boardCells: BoardCells;
-    history: Array<BoardCells>;
-    xIsNext: boolean;
-}
 
-export class App extends Component<never, AppState> {
-    constructor(props: never) {
+export class App extends Component {
+    constructor(props) {
         super(props);
         const initialBoardCells = Array(9).fill(null);
         this.state = {
@@ -51,7 +45,7 @@ export class App extends Component<never, AppState> {
         );
     }
 
-    handlePlay = (nextSquares: BoardCells) => {
+    handlePlay = (nextSquares) => {
         this.setState(prevState => ({
             boardCells: nextSquares,
             xIsNext: !prevState.xIsNext,
@@ -59,7 +53,7 @@ export class App extends Component<never, AppState> {
         }));
     };
 
-    handleJumpToMove = (move: number) => {
+    handleJumpToMove = (move) => {
         this.setState(prevState => ({
             boardCells: prevState.history[move],
             xIsNext: move % 2 === 0,

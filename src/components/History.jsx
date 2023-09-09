@@ -1,13 +1,7 @@
-import { BoardCells } from "../types";
 import React from "react";
-import { Button } from "../elements/Button.tsx";
+import { Button } from "../elements/Button.jsx";
 
-interface HistoryProps {
-    history: Array<BoardCells>;
-    onJumpToMove: (move: number) => void;
-}
-
-export class History extends React.Component<HistoryProps> {
+export class History extends React.Component {
     render() {
         const {history, onJumpToMove} = this.props;
         return (

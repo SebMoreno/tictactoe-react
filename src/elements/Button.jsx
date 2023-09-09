@@ -1,14 +1,7 @@
 import React from "react";
 import "../styles/Button.css";
 
-interface ButtonProps {
-    children?: React.ReactNode;
-    type: "galaxy" | "lifted";
-    onClick: () => void;
-    buttonNativeProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-}
-
-export class Button extends React.Component<ButtonProps> {
+export class Button extends React.Component {
     render() {
         const {children, type, onClick, buttonNativeProps} = this.props;
         return (

@@ -1,15 +1,8 @@
-import { Square } from "./Square.tsx";
+import { Square } from "./Square.jsx";
 import { Component } from "react";
-import { BoardCells } from "../types";
-import { calculateWinner } from "../services/calculateWinner.ts";
+import { calculateWinner } from "../services/calculateWinner.js";
 
-interface BoardProps {
-    xIsNext: boolean;
-    squares: BoardCells;
-    onPlay: (nextSquares: BoardCells) => void;
-}
-
-export class Board extends Component<BoardProps> {
+export class Board extends Component {
     render() {
         const {squares} = this.props;
         return (
@@ -21,7 +14,7 @@ export class Board extends Component<BoardProps> {
         );
     }
 
-    handleClick = (i: number) => {
+    handleClick = (i) => {
         if (!calculateWinner(this.props.squares) && !this.props.squares[i]) {
             this.props.onPlay(this.props.squares.with(i, this.props.xIsNext ? "X" : "O"));
         }
