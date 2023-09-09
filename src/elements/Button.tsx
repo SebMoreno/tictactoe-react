@@ -5,11 +5,11 @@ interface ButtonProps {
     children?: React.ReactNode;
     type: "galaxy" | "lifted";
     onClick: () => void;
-    style?: React.CSSProperties;
+    buttonNativeProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-export const Button: React.FC<ButtonProps> = ({children, type, onClick, style}) => (
-    <button style={style} className={type} onClick={onClick}>
+export const Button: React.FC<ButtonProps> = ({children, type, onClick, buttonNativeProps}) => (
+    <button className={type} onClick={onClick} {...buttonNativeProps}>
         <span>{children}</span>
     </button>
 );

@@ -34,11 +34,16 @@ export const App = () => {
         <div className="game">
             <div>
                 <h2 className={`status ${winner ? "winner" : ""}`}>
-                    {winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? 'X' : 'O'}`}
+                    {winner ? `Winner: ${winner}`
+                        : history.length > 9 ? "It's a tie!"
+                            : `Next player: ${xIsNext ? 'X' : 'O'}`}
                 </h2>
-                {winner &&
-                    <Button type="lifted" onClick={resetGame} style={{margin: "1rem 0"}}>Reset Game</Button>
-                }
+                <Button type="lifted" onClick={resetGame} buttonNativeProps={{
+                    style: {
+                        margin: "1rem 0",
+                        visibility: winner || history.length > 9 ? "visible" : "hidden"
+                    }
+                }}>Reset Game</Button>
                 <Board xIsNext={xIsNext} squares={boardCells} onPlay={handlePlay}/>
             </div>
             <div>
