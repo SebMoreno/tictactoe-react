@@ -1,5 +1,3 @@
-import { BoardCells } from "../types";
-
 export function calculateWinner(squares: BoardCells) {
     const lines = [
         [0, 1, 2],

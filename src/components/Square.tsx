@@ -1,12 +1,9 @@
-import React from "react";
-import { BoardCells } from "../types";
-
 interface SquareProps {
     value?: BoardCells[number];
     onSquareClick: () => void;
 }
 
-export const Square: React.FC<SquareProps> = ({ value, onSquareClick }) => {
+export const Square: FC<SquareProps> = ({value, onSquareClick}) => {
     return (
         <button className="square" onClick={onSquareClick}>
             {value}

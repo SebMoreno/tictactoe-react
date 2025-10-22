@@ -1,6 +1,4 @@
 import { Square } from "./Square.tsx";
-import { FC } from "react";
-import { BoardCells } from "../types";
 import { calculateWinner } from "../services/calculateWinner.ts";
 
 interface BoardProps {
@@ -12,7 +10,7 @@ interface BoardProps {
 export const Board: FC<BoardProps> = ({xIsNext, squares, onPlay}) => {
     function handleClick(i: number) {
         if (!calculateWinner(squares) && !squares[i]) {
-            onPlay(squares.with(i, xIsNext ? 'X' : 'O'));
+            onPlay(squares.with(i, xIsNext ? "X" : "O"));
         }
     }
 

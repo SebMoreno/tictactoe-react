@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Board } from "./components/Board.tsx";
-import { BoardCells } from "./types";
 import { calculateWinner } from "./services/calculateWinner.ts";
 import { History } from "./components/History.tsx";
 import { Button } from "./elements/Button.tsx";
 
-export const App = () => {
+export const App: FC = () => {
     const [boardCells, setBoardCells] = useState<BoardCells>(Array(9).fill(null));
     const [history, setHistory] = useState<Array<BoardCells>>([boardCells]);
     const [xIsNext, setXIsNext] = useState(true);
@@ -36,7 +35,7 @@ export const App = () => {
                 <h2 className={`status ${winner ? "winner" : ""}`}>
                     {winner ? `Winner: ${winner}`
                         : history.length > 9 ? "It's a tie!"
-                            : `Next player: ${xIsNext ? 'X' : 'O'}`}
+                            : `Next player: ${xIsNext ? "X" : "O"}`}
                 </h2>
                 <Button type="lifted" onClick={resetGame} buttonNativeProps={{
                     style: {

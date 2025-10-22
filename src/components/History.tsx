@@ -1,5 +1,3 @@
-import { BoardCells } from "../types";
-import React from "react";
 import { Button } from "../elements/Button.tsx";
 
 interface HistoryProps {
@@ -7,13 +5,13 @@ interface HistoryProps {
     onJumpToMove: (move: number) => void;
 }
 
-export const History: React.FC<HistoryProps> = ({history, onJumpToMove}) => {
+export const History: FC<HistoryProps> = ({history, onJumpToMove}) => {
     return (
         <ol className="history" start={0}>
             {history.map((_, move) => (
                 <li key={move}>
                     <Button type="galaxy" onClick={() => onJumpToMove(move)}>
-                        {`Go to ${move > 0 ? `move #${move}` : 'game start'}`}
+                        {`Go to ${move > 0 ? `move #${move}` : "game start"}`}
                     </Button>
                 </li>
             ))}
